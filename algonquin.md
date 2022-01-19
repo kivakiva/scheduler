@@ -31,3 +31,5 @@
 - you are allowed to virtually audit - reach out to program coordinator frasers@algonquincollege.com cc sherryl
 - algonquin v sheridan/seneca
 - faculty comitment
+- reach out to fred and ask to audit
+- Fred Sebastian, Program Coordinator, at 613-727-4723 ext. 7395 or sebastf@algonquincollege.com.
