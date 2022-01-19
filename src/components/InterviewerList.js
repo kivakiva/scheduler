@@ -1,26 +1,19 @@
 import React, { useState } from "react";
 import InterviewerListItem from "components/InterviewerListItem";
+import "components/InterviewerList.scss"
 
 export default function InterviewerList(props) {
 
-  const mockInterviewers = [
-    {name: "Abraham",
-  id:1},
-    {name: "johnny",
-  id:2},
-    {name: "bella",
-  id:3}
+  const {setInterviewer, interviewer, interviewers} = props;
   
-  ]
-
-  const [interviewer, setInterviewer] = useState("no interviewer")
-
-  const interviewers = mockInterviewers.map((interviewerData) => <InterviewerListItem {...interviewerData} key={interviewer.id} interviewer={interviewer} setInterviewer={setInterviewer}/>)
+  const parsedInterviewers = interviewers.map((interviewerData) => <InterviewerListItem {...interviewerData} key={interviewerData.id} interviewer={interviewer} setInterviewer={setInterviewer} selected={interviewer===interviewerData.id} />)
 
   return (
-    <ul>
-      {interviewers}
-    </ul>
+    <section className="interviewers">
+  <h4 className="interviewers__header text--light">Interviewer</h4>
+  <ul className="interviewers__list">{parsedInterviewers}</ul>
+</section>
+
   )
 }
 
