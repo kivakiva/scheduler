@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import "components/Application.scss";
 import DayList from "components/DayList.js";
+import InterviewerList from "components/InterviewerList.js";
 
 const days = [
   {
@@ -50,6 +51,7 @@ export default function Application(props) {
   day={day} 
   setDay={setDay}
   />
+<InterviewerList />
 </nav>
 <img
   className="sidebar__lhl sidebar--centered"
