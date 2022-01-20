@@ -45,7 +45,6 @@ export default function Application(props) {
   //   setDay(name);
   // }
   
-
   return (
     <main className="layout">
       <section className="sidebar">
@@ -58,8 +57,8 @@ export default function Application(props) {
 <nav className="sidebar__menu">
 <DayList 
   days={days} 
-  day={day} 
-  setDay={setDay}
+  value={day} 
+  onChange={setDay}
   />
 <InterviewerList interviewers={interviewers} setInterviewer={setInterviewer} interviewer={interviewer} />
 </nav>
