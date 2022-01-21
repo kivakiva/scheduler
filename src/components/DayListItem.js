@@ -7,7 +7,6 @@ export default function DayListItem(props) {
 
   const {name, spots, setDay, selected } = props;
 
-  // console.log(props);
 
   const dayClass = classNames("day-list__item", {
     "day-list__item--selected": selected,

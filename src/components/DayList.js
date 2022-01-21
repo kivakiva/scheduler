@@ -5,7 +5,6 @@ export default function DayList (prop) {
   
   const { days, onChange, value } = prop;
 
-  // console.log(setDay);
 
   const parsedDays = days.map(day => {
     return (
