@@ -3,12 +3,12 @@ import DayListItem from "./DayListItem";
 
 export default function DayList (prop) {
   
-  const { days, onChange, value } = prop;
+  const { days, onChange, value, state } = prop;
 
 
   const parsedDays = days.map(day => {
     return (
-      <DayListItem key={day.id} {...day} value={value} setDay={onChange} selected={day.name===value} />)
+      <DayListItem key={day.id} {...day} value={value} state={state} setState={onChange} selected={day.name===value} />)
   })
   
 
