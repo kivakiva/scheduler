@@ -5,6 +5,7 @@ import "components/Application.scss";
 import DayList from "components/DayList.js";
 import InterviewerList from "components/InterviewerList.js";
 import Appointment from "components/Appointment";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 // const days = [
 //   {
@@ -76,33 +77,32 @@ const interviewers = [
 
 export default function Application(props) {
 
-  const [day, setDay] = useState("Monday");
-  const [interviewer, setInterviewer] = useState("Billie");
-  const [days, setDays] = useState([]);
-
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
+    appointments: {},
+    interviewers: {}
   })
-
-  const dailyAppointments = [];
 
   useEffect(() => {
     Promise.all([
       axios.get("./api/days"),
-      axios.get("./api/appointments")
+      axios.get("./api/appointments"),
+      axios.get("./api/interviewers")
     ]).then((all) => {
 
-      const [days, appointments] = all;
+      const [days, appointments, interviewers] = all;
 
       
-      setState(prev => ({...prev, days: days.data, appointments : appointments.data}))
+      setState(prev => ({...prev, days: days.data, appointments : appointments.data, interviewers : interviewers.data}))
     }) 
   }, [])
 
-  console.log(state.appointments);
-      
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  console.log(state.interviewers);
+  
+  //for each appointment put the interviewr with the matching id in the object
+  
   return (
     <main className="layout">
       <section className="sidebar">
@@ -119,7 +119,7 @@ export default function Application(props) {
   onChange={setState}
   state={state}
   />
-<InterviewerList interviewers={interviewers} onChange={setState} state={state} value={interviewer} />
+<InterviewerList interviewers={interviewers} onChange={setState} state={state} value={state.interviewer} />
 </nav>
 <img
   className="sidebar__lhl sidebar--centered"
@@ -129,10 +129,11 @@ export default function Application(props) {
         </section>
       <section className="schedule">
         <h3> appointments </h3>
-        {Object.entries(state.appointments).map(([id, appointment]) =>{
+        {dailyAppointments.map((appointment) =>{
+          const interview = getInterview(state, appointment.interview);
 
           return (
-            <Appointment key={id} {...appointment} />)
+            <Appointment key={appointment.id} {...appointment} interview={interview} />)
         }).concat([<Appointment key="last" time="5pm" />])
         }
       </section>
