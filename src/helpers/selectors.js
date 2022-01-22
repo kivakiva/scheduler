@@ -6,7 +6,7 @@ function getAppointmentsForDay (state, day) {
 
   const appointments = stateDay[0].appointments;
 
-  for (const [key, value] of Object.entries(state.appointments)) {
+  for (const [, value] of Object.entries(state.appointments)) {
     if (appointments.includes(value.id)) {
       returnArr.push(value)
     }
@@ -22,6 +22,22 @@ function getInterview (state, interview) {
   return { ...interview, interviewer }
 }
 
+function getInterviewersForDay (state, day) {
+  const returnArr = [];
+  const stateDay = state.days.filter(potentialDay => potentialDay.name === day);
+
+  if (stateDay.length !== 1) {return []};
+
+  const interviewers = stateDay[0].interviewers;
+
+  for (const [, value] of Object.entries(state.interviewers)) {
+    if (interviewers.includes(value.id)) {
+      returnArr.push(value)
+    }
+  }
+  return returnArr;
+};
 
 
-export { getAppointmentsForDay, getInterview }
+
+export { getAppointmentsForDay, getInterview, getInterviewersForDay }

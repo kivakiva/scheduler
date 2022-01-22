@@ -133,7 +133,7 @@ export default function Application(props) {
           const interview = getInterview(state, appointment.interview);
 
           return (
-            <Appointment key={appointment.id} {...appointment} interview={interview} />)
+            <Appointment key={appointment.id} {...appointment} state={state} interview={interview} />)
         }).concat([<Appointment key="last" time="5pm" />])
         }
       </section>

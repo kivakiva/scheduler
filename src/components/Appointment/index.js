@@ -4,6 +4,7 @@ import Header from "components/Appointment/Header.js";
 import Show from "components/Appointment/Show.js";
 import Empty from "components/Appointment/Empty.js";
 import Form from "components/Appointment/Form.js";
+import { getInterviewersForDay } from "helpers/selectors";
 
 import useVisualMode from "hooks/useVisualMode.js";
 
@@ -13,7 +14,7 @@ const CREATE = "CREATE";
 
 export default function Appointment(props) {
 
-  const { interview, time } = props;
+  const { interview, time, state } = props;
 
   const { mode, transition, back }  = useVisualMode( 
     interview ? SHOW : EMPTY );
@@ -29,7 +30,7 @@ export default function Appointment(props) {
           />
           )}
       {mode === CREATE && <Form
-        interviewers={[]}
+        interviewers={getInterviewersForDay(state, state.day)}
         onCancel={() => back()}
       /> }
     </article>
