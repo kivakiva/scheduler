@@ -14,6 +14,7 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
 
 export default function Appointment(props) {
 
@@ -22,6 +23,7 @@ export default function Appointment(props) {
   const { mode, transition, back }  = useVisualMode( 
     interview ? SHOW : EMPTY );
 
+    //logic for saving an interview
 
     function bookInterview(id, interview) {
       const appointment = {
@@ -49,7 +51,35 @@ export default function Appointment(props) {
       };
       transition(SAVING);
       bookInterview(id, interview);
-    };  
+    };
+
+    //logic for deleting an interview
+
+    const cancelInterview = (id) => {
+
+      const appointment = {
+        ...state.appointments[id],
+        interview: null
+      };
+  
+  
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      setState({...state, appointments});
+      axios.delete(`./api/appointments/${id}`)
+      .then(() => {
+        transition(EMPTY);
+      })
+      .catch(err => console.log(err.message))
+      
+    };
+
+    const cancel = (id) => {
+      transition(DELETING);
+      cancelInterview(id)
+    }
 
   return (
     <article className="appointment">
@@ -58,7 +88,9 @@ export default function Appointment(props) {
       {mode === SHOW && (
         <Show 
           student={interview.student} 
-          interviewer={interview.interviewer.name} 
+          interviewer={interview.interviewer.name}
+          onDelete={ cancel }
+          id={ id }
           />
           )}
       {mode === CREATE && <Form
@@ -67,7 +99,10 @@ export default function Appointment(props) {
         onSave = { save }
       /> }
       {mode === SAVING && <Status 
-        message="saving"
+        message="Saving"
+      />}
+      {mode === DELETING && <Status 
+        message="Deleting"
       />}
     </article>
   )
