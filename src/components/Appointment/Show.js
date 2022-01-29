@@ -20,7 +20,7 @@ export default function Show(props) {
         src="images/edit.png"
         alt="Edit"
         onClick={ () => {
-          return onEdit(student, id) } }
+          return onEdit() } }
       />
       <img
         className="appointment__actions-button"
