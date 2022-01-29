@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import "components/Appointment/styles.scss";
 import Header from "components/Appointment/Header.js";
 import Show from "components/Appointment/Show.js";
@@ -24,35 +23,14 @@ const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
 
-  const { interview, time, state, setState, id } = props;
+  const { interview, time, state, id, bookInterview, cancelInterview } = props;
 
   const { mode, transition, back }  = useVisualMode( 
     interview ? SHOW : EMPTY );
 
     //logic for saving an interview
 
-    function bookInterview(id, interview) {
-      const appointment = {
-        ...state.appointments[id],
-        interview: { ...interview }
-      };
-  
-  
-      const appointments = {
-        ...state.appointments,
-        [id]: appointment
-      };
-      axios.put(`./api/appointments/${id}`, appointment)
-      .then(() => {
-        setState({...state, appointments});
-        transition(SHOW);
-      })
-      .catch(err => {
-        transition(ERROR_SAVE, true)
-        console.log(err.message)
-      }
-      )
-    };
+
 
  
     const save = (name, interviewer) => {
@@ -61,39 +39,16 @@ export default function Appointment(props) {
         interviewer
       };
       transition(SAVING);
-      bookInterview(id, interview);
+      bookInterview(id, interview, transition, SHOW, ERROR_SAVE);
     };
 
     //logic for deleting an interview
 
-    const cancelInterview = (id) => {
-
-      axios.delete(`./api/appointments/${id}`)
-      .then(() => {
-        const appointment = {
-          ...state.appointments[id],
-          interview: null
-        };
     
-    
-        const appointments = {
-          ...state.appointments,
-          [id]: appointment
-        };
-        setState({...state, appointments});
-        transition(EMPTY);
-      })
-      .catch(err => {
-        transition(ERROR_DELETE, true)
-        console.log(err.message)
-      }
-      )
-      
-    };
 
     const cancel = (id) => {
       transition(DELETING, true);
-      cancelInterview(id);
+      cancelInterview(id, transition, EMPTY, ERROR_DELETE);
     }
 
     const confirm = () => {

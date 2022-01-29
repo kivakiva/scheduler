@@ -8,7 +8,7 @@ export default function DayList (prop) {
 
   const parsedDays = days.map(day => {
     return (
-      <DayListItem key={day.id} {...day} value={value} state={state} setState={onChange} selected={day.name===value} />)
+      <DayListItem key={day.id} {...day} value={value} state={state} setDay={onChange} selected={day.name===value} />)
   })
   
 
