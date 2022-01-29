@@ -19,7 +19,8 @@ export default function Show(props) {
         className="appointment__actions-button"
         src="images/edit.png"
         alt="Edit"
-        onClick={onEdit}
+        onClick={ () => {
+          return onEdit(student, id) } }
       />
       <img
         className="appointment__actions-button"
