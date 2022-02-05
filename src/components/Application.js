@@ -52,7 +52,7 @@ export default function Application() {
   onChange={setDay}
   state={state}
   />
-<InterviewerList interviewers={interviewers} state={state} value={state.interviewer} />
+{/* <InterviewerList interviewers={interviewers} state={state} value={state.interviewer} /> */}
 </nav>
 <img
   className="sidebar__lhl sidebar--centered"

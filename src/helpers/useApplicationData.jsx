@@ -101,7 +101,6 @@ const useApplicationData = () => {
 
       const [days, appointments, interviewers] = all;
 
-      
       setState(prev => ({...prev, days: days.data, appointments : appointments.data, interviewers : interviewers.data}))
     }) 
   }, [])
